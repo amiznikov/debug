@@ -3,6 +3,7 @@
  * This is the common logic for both the Node.js and web browser
  * implementations of `debug()`.
  */
+const util = require('util');
 const logFile = require('simple-node-logger').createSimpleLogger('project.log');
 function setup(env) {
 	createDebug.debug = createDebug;
