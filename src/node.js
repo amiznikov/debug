@@ -4,7 +4,6 @@
 
 const tty = require('tty');
 const util = require('util');
-
 /**
  * This is the Node.js implementation of `debug()`.
  */
@@ -160,8 +159,8 @@ function useColors() {
  * @api public
  */
 
-function formatArgs(args) {
-	const {namespace: name, useColors} = this;
+function formatArgs(args, useColors) {
+	const {namespace: name} = this;
 
 	if (useColors) {
 		const c = this.color;

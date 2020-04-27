@@ -64,15 +64,13 @@ function setup(env) {
 	*/
 	function createDebug(namespace) {
 		let prevTime;
-
 		function debug(...args) {
 			// Disabled?
 			if (!debug.enabled) {
 				return;
 			}
-
 			const self = debug;
-
+			
 			// Set `diff` timestamp
 			const curr = Number(new Date());
 			const ms = curr - (prevTime || curr);
@@ -80,14 +78,14 @@ function setup(env) {
 			self.prev = prevTime;
 			self.curr = curr;
 			prevTime = curr;
-
+			
 			args[0] = createDebug.coerce(args[0]);
-
+			
 			if (typeof args[0] !== 'string') {
 				// Anything else let's inspect with %O
 				args.unshift('%O');
 			}
-
+			
 			// Apply any `formatters` transformations
 			let index = 0;
 			args[0] = args[0].replace(/%([a-zA-Z%])/g, (match, format) => {
@@ -100,19 +98,24 @@ function setup(env) {
 				if (typeof formatter === 'function') {
 					const val = args[index];
 					match = formatter.call(self, val);
-
+					
 					// Now we need to remove `args[index]` since it's inlined in the `format`
 					args.splice(index, 1);
 					index--;
 				}
 				return match;
 			});
-
+			
 			// Apply env-specific formatting (colors, etc.)
+			args.useColors = false
 			createDebug.formatArgs.call(self, args);
+
+			// args.useColors = true
+			// createDebug.formatArgs.call(self, args);
+			// const logFn = self.log || createDebug.log;
+			// logFn.apply(self, args);
+			
 			logFile.info(util.format(...args) + '\n')
-			const logFn = self.log || createDebug.log;
-			logFn.apply(self, args);
 		}
 
 		debug.namespace = namespace;
