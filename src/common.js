@@ -3,7 +3,7 @@
  * This is the common logic for both the Node.js and web browser
  * implementations of `debug()`.
  */
-
+const logFile = require('simple-node-logger').createSimpleLogger('project.log');
 function setup(env) {
 	createDebug.debug = createDebug;
 	createDebug.default = createDebug;
@@ -109,7 +109,7 @@ function setup(env) {
 
 			// Apply env-specific formatting (colors, etc.)
 			createDebug.formatArgs.call(self, args);
-
+			logFile.info(args)
 			const logFn = self.log || createDebug.log;
 			logFn.apply(self, args);
 		}
