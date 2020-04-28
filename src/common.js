@@ -4,7 +4,7 @@
  * implementations of `debug()`.
  */
 const util = require('util');
-const logFile = require('simple-node-logger').createSimpleLogger('project.log');
+const logFile = require('simple-node-logger').createSimpleFileLogger('project.log');
 function setup(env) {
 	createDebug.debug = createDebug;
 	createDebug.default = createDebug;
